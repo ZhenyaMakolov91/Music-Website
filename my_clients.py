@@ -8,7 +8,7 @@ class Clients:
     def structure(self):  # 1 зачет
         '''формируем таблицы клиентов и их номеров'''
         with self.conn.cursor() as cur:
-            # cur.execute('''DROP TABLE phones; DROP TABLE clients;''')
+            cur.execute('''DROP TABLE phones; DROP TABLE clients;''')
             cur.execute('''
                 CREATE TABLE IF NOT EXISTS clients(id SERIAL PRIMARY KEY, name VARCHAR(40) NOT NULL,
                 surname VARCHAR(40) NOT NULL, email VARCHAR(40) UNIQUE NOT NULL);
@@ -43,7 +43,7 @@ class Clients:
                     print('Ошибка! Такого поля не существует, попробуйте еще раз.')
                     break
                 value = input('Введите новое значение поля: ')
-                set_requests = ['''UPDATE clients SET name=%s WHERE id=%s''',my
+                set_requests = ['''UPDATE clients SET name=%s WHERE id=%s''',
                                 '''UPDATE clients SET surname=%s WHERE id=%s''',
                                 '''UPDATE clients SET email=%s WHERE id=%s''']
                 cur.execute(set_requests[field], (value, id_client))
@@ -92,9 +92,9 @@ my_database.add_client('Оля', 'Соколовская', 'matan@mail.ru')
 my_database.add_phone(1, '+7-978-86-79-685')
 my_database.add_phone(1, '+7-978-245-19-04')
 my_database.add_phone(2, '+7-978-228-63-31')
-my_database.update_client()
-my_database.delete_phone(1)
-my_database.delete_client(1)
+# my_database.update_client()
+# my_database.delete_phone(1)
+# my_database.delete_client(1)
 my_database.search_client('t3@mail.ru')
 my_database.my_tables()
 my_database.conn.close()
