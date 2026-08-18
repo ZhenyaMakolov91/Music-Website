@@ -39,9 +39,11 @@ class Clients:
             while True:
                 id_client = input('Введите id: ')
                 field = int(input('Введите номер обновляемого поля. 1) name; 2) surname; 3) email: ')) - 1
-                print('Ошибка! Попробуйте еще раз') if field not in [0, 1, 2] else ...
+                if field not in [0, 1, 2]:
+                    print('Ошибка! Такого поля не существует, попробуйте еще раз.')
+                    break
                 value = input('Введите новое значение поля: ')
-                set_requests = ['''UPDATE clients SET name=%s WHERE id=%s''',
+                set_requests = ['''UPDATE clients SET name=%s WHERE id=%s''',my
                                 '''UPDATE clients SET surname=%s WHERE id=%s''',
                                 '''UPDATE clients SET email=%s WHERE id=%s''']
                 cur.execute(set_requests[field], (value, id_client))
