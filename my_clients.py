@@ -5,7 +5,7 @@ class Clients:
         '''подключение к базе данных'''
         self.conn = psycopg2.connect(dbname=dbname, user=user, password=password)
 
-    def structure(self):  # 1 зачет
+    def structure(self):
         '''формируем таблицы клиентов и их номеров'''
         with self.conn.cursor() as cur:
             # cur.execute('''DROP TABLE phones; DROP TABLE clients;''')
