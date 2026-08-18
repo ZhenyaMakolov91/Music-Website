@@ -8,7 +8,7 @@ class Clients:
     def structure(self):  # 1 зачет
         '''формируем таблицы клиентов и их номеров'''
         with self.conn.cursor() as cur:
-            cur.execute('''DROP TABLE phones; DROP TABLE clients;''')
+            # cur.execute('''DROP TABLE phones; DROP TABLE clients;''')
             cur.execute('''
                 CREATE TABLE IF NOT EXISTS clients(id SERIAL PRIMARY KEY, name VARCHAR(40) NOT NULL,
                 surname VARCHAR(40) NOT NULL, email VARCHAR(40) UNIQUE NOT NULL);
