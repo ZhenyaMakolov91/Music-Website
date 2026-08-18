@@ -80,8 +80,8 @@ class Clients:
             cur.execute('''SELECT * FROM clients'''), print(cur.fetchall())
             cur.execute('''SELECT * FROM phones'''), print(cur.fetchall())
 
-database, user, password = input('Введите название БД: '), input('Имя пользователя: '), input('Пароль: ')
-my_database = Clients(database, user, password)
+database, my_user, my_password = input('Введите название БД: '), input('Имя пользователя: '), input('Пароль: ')
+my_database = Clients(database, my_user, my_password)
 my_database.structure()
 my_database.add_client('Женя', 'Мамонов', 'emamonov@bk.ru')
 my_database.add_client('Наташа', 'Маколова', 'mashoshina62@mail.ru')
