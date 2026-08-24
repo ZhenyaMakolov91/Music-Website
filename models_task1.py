@@ -9,6 +9,9 @@ class Publisher(Base):
     name = sq.Column(sq.String(length=40), unique=True)
     books = relationship('Book', back_populates='publisher')
 
+    def __str__(self):
+        return f'{self.id, self.name}'
+
 class Book(Base):
     __tablename__ = 'book'
     id = sq.Column(sq.Integer, primary_key=True)
@@ -17,11 +20,17 @@ class Book(Base):
     publisher = relationship('Publisher', back_populates='books')
     stocks = relationship('Stock', back_populates='books')
 
+    def __str__(self):
+        return self.id, self.title, self.id_publisher
+
 class Shop(Base):
     __tablename__ = 'shop'
     id = sq.Column(sq.Integer, primary_key=True)
     name = sq.Column(sq.String(length=40), unique=True)
     stocks = relationship('Stock', back_populates='shops')
+
+    def __str__(self):
+        return self.id, self.name
 
 class Stock(Base):
     __tablename__ = 'stock'
@@ -33,12 +42,22 @@ class Stock(Base):
     shops = relationship('Shop', back_populates='stocks')
     sales = relationship('Sale', back_populates='stock')
 
+    def __str__(self):
+        return self.id, self.id_book, self.id_shop, self.count
+
 
 class Sale(Base):
     __tablename__ = 'sale'
     id = sq.Column(sq.Integer, primary_key=True)
     price = sq.Column(sq.Integer, sq.CheckConstraint('price > 0', name='check positive price'), nullable=False)
-    data_sale = sq.Column(sq.Date, nullable=False, index=True)
+    date_sale = sq.Column(sq.String(length=40), nullable=False)
     id_stock = sq.Column(sq.Integer, sq.ForeignKey('stock.id'), nullable=False)
     count = sq.Column(sq.Integer, sq.CheckConstraint('count > 0', name='check positive count'), nullable=False)
     stock = relationship('Stock', back_populates='sales')
+
+    def __str__(self):
+        return f'{self.id, self.price, self.date_sale, self.id_stock, self.count}'
+
+def create_tables(engine):
+    Base.metadata.drop_all(engine)
+    Base.metadata.create_all(engine)
