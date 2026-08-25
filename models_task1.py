@@ -37,7 +37,7 @@ class Stock(Base):
     id = sq.Column(sq.Integer, primary_key=True)
     id_book = sq.Column(sq.Integer, sq.ForeignKey('book.id'), nullable=False)
     id_shop = sq.Column(sq.Integer, sq.ForeignKey('shop.id'), nullable=False)
-    count = sq.Column(sq.Integer, sq.CheckConstraint('count > 0', name='check positive count'), nullable=False)
+    count = sq.Column(sq.Integer, sq.CheckConstraint('count >= 0', name='check value non negative'), nullable=False)
     books = relationship('Book', back_populates='stocks')
     shops = relationship('Shop', back_populates='stocks')
     sales = relationship('Sale', back_populates='stock')
@@ -49,10 +49,10 @@ class Stock(Base):
 class Sale(Base):
     __tablename__ = 'sale'
     id = sq.Column(sq.Integer, primary_key=True)
-    price = sq.Column(sq.Integer, sq.CheckConstraint('price > 0', name='check positive price'), nullable=False)
+    price = sq.Column(sq.Float, sq.CheckConstraint('price > 0', name='check positive price'), nullable=False)
     date_sale = sq.Column(sq.String(length=40), nullable=False)
     id_stock = sq.Column(sq.Integer, sq.ForeignKey('stock.id'), nullable=False)
-    count = sq.Column(sq.Integer, sq.CheckConstraint('count > 0', name='check positive count'), nullable=False)
+    count = sq.Column(sq.Integer, sq.CheckConstraint('count >= 0', name='check positive count'), nullable=False)
     stock = relationship('Stock', back_populates='sales')
 
     def __str__(self):
